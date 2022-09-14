@@ -1,0 +1,123 @@
+#p1 {
+    position: fixed;
+    top: 3vh;
+    left: 15vw;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+
+.bendy {
+    float: left;
+    position: relative;
+    left: 52px;
+    bottom: 54px;
+}
+
+.bendy2 {
+    float: left;
+    position: relative;
+    left: 52px;
+    bottom: 106px;
+}
+
+.bendy4 {
+    float: left;
+    position: relative;
+    left: -2px;
+    bottom: 106px;
+}
+
+.bendy4b {
+    float: left;
+    position: relative;
+    left: 52px;
+    bottom: 54px;
+}
+
+.bendy5 {
+    float: left;
+    position: relative;
+    left: -2px;
+    bottom: 106px;
+}
+
+.bendy5b {
+    float: left;
+    position: relative;
+    left: -52px;
+    bottom: 54px;
+}
+
+#p2 {
+    position: fixed;
+    bottom: 10vh;
+    left: 20vw;
+    -webkit-animation:spin2 3s linear infinite;
+    -moz-animation:spin2 3s linear infinite;
+    animation:spin2 3s linear infinite;
+}
+
+#p3 {
+    position: fixed;
+    bottom: 10vh;
+    right: 20vw;
+    -webkit-animation:spin 5s linear infinite;
+    -moz-animation:spin 5s linear infinite;
+    animation:spin 5s linear infinite;
+}
+
+#p4 {
+    position: fixed;
+    top: 20vh;
+    right: 10vw;
+    -webkit-animation:spin2 8s linear infinite;
+    -moz-animation:spin2 8s linear infinite;
+    animation:spin2 8s linear infinite;
+}
+
+#p5 {
+    position: fixed;
+    top: 5vh;
+    right: 25vw;
+    -webkit-animation:spin2 5s linear infinite;
+    -moz-animation:spin2 5s linear infinite;
+    animation:spin2 5s linear infinite;
+}
+
+.box {
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+    margin: 2px;
+    box-shadow: 0 0 10px 0px #00000042;
+    z-index: -1;
+}
+
+.color {
+    background-color: rgba(223, 173, 36, 1);
+}
+
+.color2 {
+    background-color: rgba(132, 61, 198, 1);
+}
+
+.color3 {
+    background-color: rgba(80, 227, 230, 1);
+}
+
+.color4 {
+    background-color: rgba(223, 217, 36, 1);
+}
+
+.color5 {
+    background-color: rgba(48, 211, 56, 1);
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(-360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(-360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(-360deg); transform:rotate(-360deg); } }
+
+@-moz-keyframes spin2 { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin2 { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin2 { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

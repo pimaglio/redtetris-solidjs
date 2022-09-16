@@ -1,27 +1,35 @@
-import { createEffect, onMount, Show } from "solid-js";
-import { useNavigate, useRouteData } from "@solidjs/router";
+import { createEffect, Show } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 // components
 import TetrisLoader from "../components/shared/Loader/TetrisLoader";
-import { useGameState } from "../context/game";
+import { GameWrapper } from "../components/Game";
+// context
+import { useGameDispatch, useGameState } from "../context/game";
+import { ButtonSpinner } from "../components/shared/Buttons";
 
 // ----------------------------------------------------------------------
 
 export default function Room() {
-    const { roomName, playerName } = useRouteData();
+    const {room, isLoading} = useGameState()
+    const {handleKeyActions, startGame} = useGameDispatch()
     const navigate = useNavigate();
-    const {room, player, isLoading} = useGameState()
+
 
     createEffect(() => {
         if (!room) navigate('/', {replace: true})
-        //console.log(room.name)
     })
+
+    const handleStartGame = (e) => {
+        e.preventDefault()
+        startGame()
+    }
 
     return (
         <Show when={!isLoading} fallback={<TetrisLoader/>} keyed>
-            <section class="bg-gray-100 text-gray-700 p-8">
-                <h1 class="text-2xl font-bold">RoomPage: {room.name}</h1>
-                <p class="mt-4">This is the room page.</p>
-            </section>
+            <div class={'h-screen outline-0'} onKeyDown={(e) => handleKeyActions(e.key)} tabIndex={0}>
+                <GameWrapper />
+                <ButtonSpinner type={'button'} onClick={handleStartGame} name={'Start game'}/>
+            </div>
         </Show>
 
     );

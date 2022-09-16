@@ -41,18 +41,9 @@ const initRoom = (socket, data) => {
 
 const startGame = (socket, data, io) => {
   let room = getRoom(data.room)
-  room.gameStarted(data.listBlocks)
-  verbose &&
-    console.log(
-      '(SOCKET) - Broadcast to all players of ' + data.room + ' @gameStarted',
-    )
-  // socket.emit('gameStarted', {
-  //   room,
-  // })
-  io.in(data.room).emit('gameStarted', {
-    room,
-  })
-  return room
+  room.startGame()
+  io.in(data.room).emit('gameStarted', room.getBlockList())
+  verbose && console.log('(SOCKET) - Broadcast to all players of ' + data.room + ' @gameStarted',)
 }
 
 const updateSpectre = (socket, data) => {

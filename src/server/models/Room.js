@@ -1,4 +1,5 @@
 let Player = require('./Player')
+const getRandomTetriminoList = require("../helpers/gameHelpers");
 
 const players = {}
 
@@ -12,14 +13,19 @@ class Room {
     this.allBlocks = []
   }
 
-  gameStarted(listBlocks) {
-    this.listBlocks = listBlocks
-    this.allBlocks = listBlocks
+  startGame() {
+    const tetriminoList = getRandomTetriminoList()
+    this.listBlocks = tetriminoList
+    this.allBlocks = tetriminoList
     this.isStarted = true
   }
 
   getPlayer(name) {
     return this.players.find(player => player.username === name)
+  }
+
+  getBlockList() {
+    return this.listBlocks
   }
 
   addPlayer(player, socket) {

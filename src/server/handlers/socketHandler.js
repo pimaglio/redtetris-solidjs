@@ -18,7 +18,7 @@ const socketHandler = (socket, io) => {
   })
   socket.on('startGame', (data, callback) => {
     verbose && console.log(`(SOCKET) - Game will start in '${data.room}'`)
-    callback(startGame(socket, data, io))
+    startGame(socket, data, io)
   })
   socket.on('initRoom', (data, callback) => {
     callback(initRoom(socket, data))

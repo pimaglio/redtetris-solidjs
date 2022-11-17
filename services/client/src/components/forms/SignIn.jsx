@@ -17,7 +17,7 @@ export default function SignInForm(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        props.submit({ ...form })
+        return props.submit({ ...form })
     }
 
     return (

@@ -1,12 +1,9 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
 import { hashIntegration, Router } from "@solidjs/router";
-import { GameProvider } from "./client/context";
-import App from './client/App';
-//import './index.css';
+import { GameProvider } from "./context";
+import App from './App';
 import 'windi.css';
-import "solid-devtools"
-
 
 // ----------------------------------------------------------------------
 

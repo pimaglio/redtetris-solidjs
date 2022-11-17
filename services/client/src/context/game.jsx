@@ -44,7 +44,10 @@ export default function GameProvider( props ) {
     const [ dropTime, setDropTime ] = createSignal(null)
 
     const initSocketManager = () => {
-        const manager = new Manager(`http://${import.meta.env.VITE_HOST_NAME}:5000`);
+        const env = import.meta.env
+
+        console.log('IMPORT META2', `http://${env.VITE_HOST}:${env.VITE_SERVER_PORT}`)
+        const manager = new Manager(`http://0.0.0.0:80`);
         const socket = manager.socket("/", {
             auth: {
                 userId: 'test-id',
@@ -52,7 +55,7 @@ export default function GameProvider( props ) {
         });
 
         socket.on("connect_error", ( err ) => {
-            console.log(err.message);
+            console.log("ERROR SOCKET CONNECT", err.message);
         });
 
         setStore("socket", socket);
@@ -98,9 +101,9 @@ export default function GameProvider( props ) {
         }
     }
 
-/*    useInterval(() => {
+    useInterval(() => {
         softDrop()
-    }, dropTime)*/
+    }, dropTime)
 
     const joinRoom = ( roomData ) => {
         return new Promise(( resolve, reject ) => {

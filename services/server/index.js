@@ -3,7 +3,9 @@ const express = require('express');
 const http = require('http');
 const handler = require('./handlers/socketHandler');
 
-const PORT = process.env.PORT;
+const PORT = process.env.SERVER_PORT;
+
+console.log('PROCESS ENV', process.env)
 
 const router = require('./router');
 
@@ -12,7 +14,7 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server, {
   cors: {
-    origin: `http://${process.env.VITE_HOST_NAME}:${process.env.VITE_PORT}`,
+    origin: `http://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`,
     methods: ['GET', 'POST']
   },
   pingTimeout: 60000

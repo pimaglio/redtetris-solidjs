@@ -1,23 +1,26 @@
 let Player = require('./Player')
 const getRandomTetriminoList = require("../helpers/gameHelpers");
-
-const players = {}
+const { BLOCK_LIST_LIMIT, BLOCK_LIST_LIMIT_THRESHOLD } = require("../constants");
 
 class Room {
-  constructor(room, leader) {
+  constructor(room, username) {
     this.name = room
     this.players = []
-    this.gameLeader = leader
+    this.gameLeader = username
     this.isStarted = false
-    this.listBlocks = []
-    this.allBlocks = []
+    this.blockList = []
   }
 
-  startGame() {
-    const tetriminoList = getRandomTetriminoList()
-    this.listBlocks = tetriminoList
-    this.allBlocks = tetriminoList
-    this.isStarted = true
+
+  startGame(socketPlayerId) {
+    if (this.players.find(player => player.socket === socketPlayerId && player.username === this.gameLeader)) {
+      const tetriminoList = getRandomTetriminoList()
+      this.blockList = tetriminoList
+      this.isStarted = true
+      return ({
+        blockList: tetriminoList.slice(0, BLOCK_LIST_LIMIT)
+      })
+    }
   }
 
   getPlayer(name) {
@@ -25,7 +28,7 @@ class Room {
   }
 
   getBlockList() {
-    return this.listBlocks
+    return this.blockList
   }
 
   addPlayer(player, socket) {
@@ -37,16 +40,21 @@ class Room {
     return newPlayer
   }
 
-  getMoreBlocks() {
-    let newBlock = []
-    for (let i = this.listBlocks.length + 1; i < this.allBlocks.length; i++) {
-      newBlock.push(this.allBlocks[i])
+  getMoreBlocks(playerName) {
+    let nextBlockList = []
+    let currentPlayer = this.getPlayer(playerName)
+    for (let i = currentPlayer.blockListIndex; i < BLOCK_LIST_LIMIT + currentPlayer.blockListIndex; i++) {
+      nextBlockList.push(this.blockList[i])
     }
-    return newBlock
+    currentPlayer.updateBlockListIndex(currentPlayer.blockListIndex + BLOCK_LIST_LIMIT)
+    if (this.blockList.length - currentPlayer.blockListIndex < BLOCK_LIST_LIMIT_THRESHOLD ) {
+      this.addBlocks(getRandomTetriminoList())
+    }
+    return nextBlockList
   }
 
-  addBlocks(newBlocks) {
-    this.allBlocks = [...this.allBlocks, newBlocks]
+  addBlocks(newBlockList) {
+    this.blockList = [...this.blockList, ...newBlockList]
   }
 
   updateSpectre(data) {
@@ -55,7 +63,7 @@ class Room {
   }
 
   updateListBlocks(list) {
-    this.listBlocks = list
+    this.blockList = list
   }
 }
 

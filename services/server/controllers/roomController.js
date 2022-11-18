@@ -1,16 +1,16 @@
 const Room = require('../models/Room')
 const verbose = true
-const rooms = []
+const roomList = []
 let socketDATA = []
 
 const createRoom = data => {
   let room = new Room(data.room, data.username)
-  rooms.push(room)
+  roomList.push(room)
   return room
 }
 
 const getRoom = name => {
-  return rooms.find(room => room.name === name)
+  return roomList.find(room => room.name === name)
 }
 
 const joinRoom = (socket, data) => {
@@ -41,9 +41,9 @@ const initRoom = (socket, data) => {
 
 const startGame = (socket, data, io) => {
   let room = getRoom(data.room)
-  room.startGame()
-  io.in(data.room).emit('gameStarted', room.getBlockList())
-  verbose && console.log('(SOCKET) - Broadcast to all players of ' + data.room + ' @gameStarted',)
+  const {blockList} = room.startGame(socket.id)
+  io.in(data.room).emit('gameStarted', blockList)
+  verbose && console.log('(SOCKET) - Broadcast to all players of ' + data.room + ' @gameStarted')
 }
 
 const updateSpectre = (socket, data) => {
@@ -64,8 +64,9 @@ const updateSpectre = (socket, data) => {
 }
 
 const getNewBlocks = (socket, data) => {
-  let room = getRoom(data.room)
-  return room.getMoreBlocks(data.room)
+  const {storeName, playerName} = data
+  let room = getRoom(storeName)
+  return room.getMoreBlocks(playerName)
 }
 
 module.exports = {
